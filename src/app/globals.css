@@ -91,12 +91,7 @@ body {
   user-select: none;
 }
 
-@media (max-width: 768px) {
-  .hero-bottom-text-container {
-    top: 40%;
-    transform: translateY(0);
-  }
-}
+
 
 .hero-bottom-text-scroller {
   display: flex;
@@ -2196,7 +2191,7 @@ body {
 /* ========================================================================= */
 /* TABLET RESPONSIVE STYLES (iPad / Tablet portrait 769px - 1024px)         */
 /* ========================================================================= */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (max-width: 1024px) {
   /* Navbar */
   .navbar {
     padding: 1.5rem 2rem;
@@ -2244,9 +2239,9 @@ body {
   }
 
   .hero-bottom-text-container {
-    top: auto !important;
-    bottom: 0.5rem !important;
-    transform: translateY(0) !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(calc(clamp(170px, 40vw, 240px) * 0.85 + 210px)) !important;
   }
 
   .hero-face {
