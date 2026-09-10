@@ -80,8 +80,8 @@ body {
 
 .hero-bottom-text-container {
   position: absolute;
-  top: 55%;
-  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 85px));
+  top: 50%;
+  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 40px));
   width: 100%;
   padding-top: 10px;
   padding-bottom: 15px;
@@ -89,6 +89,13 @@ body {
   z-index: 1;
   pointer-events: none;
   user-select: none;
+}
+
+@media (max-width: 768px) {
+  .hero-bottom-text-container {
+    top: 40%;
+    transform: translateY(0);
+  }
 }
 
 .hero-bottom-text-scroller {
@@ -369,8 +376,14 @@ body {
 .hand-flowers-container {
   position: relative;
   width: calc(clamp(135px, 32vh, 315px) * var(--hand-scale, 1));
-  transform: translateY(calc(12vh + var(--hand-y, 0rem)));
+  transform: translateY(calc(0vh + var(--hand-y, 0rem)));
   aspect-ratio: 370 / 600;
+}
+
+@media (max-width: 1024px) {
+  .hand-flowers-container {
+    transform: translateY(calc(14vh + var(--hand-y, 0rem)));
+  }
 }
 
 .hand-svg-wrapper {
@@ -2231,8 +2244,9 @@ body {
   }
 
   .hero-bottom-text-container {
-    top: 54%;
-    transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 75px));
+    top: auto !important;
+    bottom: 0.5rem !important;
+    transform: translateY(0) !important;
   }
 
   .hero-face {
