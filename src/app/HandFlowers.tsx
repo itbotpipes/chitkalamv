@@ -17,7 +17,7 @@ const FLOWERS: FlowerData[] = [
     name: 'Blue Lotus',
     quote: '"Something catches\nyour attention."',
     imgSrc: '/handflowers/fl3-p.webp',
-    ticketStyle: { top: '-46%', left: '-12%' },
+    ticketStyle: { top: '-31%', left: '-12%' },
     dotPosition: { top: '19%', left: '42%' },
   },
   {
@@ -174,7 +174,7 @@ export default function HandFlowers() {
       const windowHeight = window.innerHeight;
       const scrollableDistance = windowHeight * 2;
       const progress = Math.max(0, Math.min(1, scrollTop / scrollableDistance));
-      
+
       if (Math.abs(progress - lastProgress) > 0.001) {
         lastProgress = progress;
         setScrollProgress(progress);
@@ -232,8 +232,8 @@ export default function HandFlowers() {
       <div className="hand-flowers-container">
         {/* Full static hand-combined SVG Background with dynamic CSS targeting */}
         <div className={containerClasses.join(' ')} style={{ top: 0, left: 0, width: '100%', height: '100%', zIndex: 5, position: 'absolute' }}>
-          <InlineFlowerSvg 
-            src="/handflowers/hand-combined.svg" 
+          <InlineFlowerSvg
+            src="/handflowers/hand-combined.svg"
             className="hand-svg"
             onFlowerHover={handleFlowerHover}
             onFlowerLeave={handleFlowerLeave}
@@ -249,7 +249,7 @@ export default function HandFlowers() {
           return (
             <div key={flower.id} className="flower-item">
               {/* Mobile tap indicator */}
-              <div 
+              <div
                 className={`mobile-indicator-wrapper indicator-${flower.id}`}
                 role="button"
                 tabIndex={0}

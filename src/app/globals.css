@@ -1444,7 +1444,7 @@ body {
   /* Force tickets to show centrally above the hand on mobile with clear distance */
   .flower-ticket {
     position: absolute !important;
-    top: -55% !important;
+    top: -22% !important;
     left: 50% !important;
     transform: translate(-50%, 8px) scale(0.95) !important;
     width: clamp(125px, 38vw, 155px) !important;
