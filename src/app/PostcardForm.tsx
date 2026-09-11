@@ -220,7 +220,7 @@ export default function PostcardForm() {
                   <span className="input-label">Name:</span>
                   <input 
                     type="text" 
-                    placeholder="Type in your name" 
+                    placeholder="Type your name here" 
                     className="line-input" 
                     value={formData.name} 
                     onChange={e => { setFormData({...formData, name: e.target.value}); setErrorMessage(''); }}
