@@ -22,11 +22,10 @@ export default function Home() {
             <nav className="navbar">
               <div className="logo-container">
                 <img
-                  src="/chitkala-logo.svg"
+                  src="/studiochitkala-logo.png"
                   alt="Chitkala Logo"
                   className="logo-image"
                 />
-                <div className="logo-subtitle">Where Thought Finds Form</div>
               </div>
               <ul className="nav-links">
                 <li><a href="#what-is">What is Studio Chitkala?</a></li>
@@ -74,7 +73,7 @@ export default function Home() {
         <div className="footer-divider"></div>
         <div className="footer-logo">
           <Image
-            src="/chitkala-logo.svg"
+            src="/studiochitkala-logo.png"
             alt="Studio Chitkala"
             width={800}
             height={256}

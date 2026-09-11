@@ -314,9 +314,9 @@ export default function MobilePostcardForm() {
                 <div className="services-pill-grid" style={{ rowGap: '0.6rem', columnGap: '0.6rem', marginBottom: '0.8rem' }}>
                   {[
                     "Brand Identity", 
-                    "Digital & Motion", 
-                    "Print Design", 
                     "Website Design/Devlopment", 
+                    "Print Design", 
+                    "Digital & Motion", 
                     "Illustration", 
                     "Brand/Design Consultation"
                   ].map((service) => {

@@ -294,9 +294,9 @@ export default function PostcardForm() {
                 <div className="services-pill-grid">
                   {[
                     "Brand Identity", 
-                    "Digital & Motion", 
-                    "Print Design", 
                     "Website Design/Devlopment", 
+                    "Print Design", 
+                    "Digital & Motion", 
                     "Illustration", 
                     "Brand/Design Consultation"
                   ].map((service) => {
