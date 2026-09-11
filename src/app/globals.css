@@ -864,7 +864,7 @@ body {
 
 .postcard-form-area {
   position: absolute;
-  top: 62%;
+  top: 60.5%;
   left: 56.5%;
   width: 36.5%;
   height: auto;
@@ -908,12 +908,12 @@ body {
 .step-main-label {
   font-size: 1.2rem;
   font-weight: 400;
-  margin-bottom: 1.5rem;
+  margin-bottom: 4rem;
   line-height: 1.25;
 }
 
 .contact-step .step-main-label {
-  margin-bottom: 1.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .contact-step .phone-group {
@@ -929,7 +929,7 @@ body {
 }
 
 .services-step .step-main-label {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .services-step .services-pill-grid {
@@ -937,11 +937,16 @@ body {
 }
 
 .notes-step {
-  margin-top: -3.8rem;
+  margin-top: -2.5rem;
+  width: 90%;
 }
 
 .notes-step .step-main-label {
   margin-bottom: 0.75rem;
+}
+
+.notes-step .textarea-wrapper {
+  width: 100%;
 }
 
 .floating-group {
@@ -1063,10 +1068,10 @@ body {
 /* Step Validation & Error Feedback */
 .step-error-msg {
   color: #A71714;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 400;
-  margin-top: -1.2rem;
-  margin-bottom: 1.2rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -1227,8 +1232,8 @@ body {
 /* Notes Textarea */
 .textarea-wrapper {
   position: relative;
-  width: 100%;
-  margin-bottom: 0.4rem;
+  width: 90%;
+  margin-bottom: 0.1rem;
 }
 
 .textarea-placeholder {
@@ -1241,7 +1246,7 @@ body {
 
 .notes-textarea {
   width: 100%;
-  height: 155px;
+  height: 160px;
   min-height: 115px;
   background: transparent;
   border: 1.5px solid #A71714;
@@ -1272,7 +1277,7 @@ body {
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  padding: 0.55rem 1.45rem;
+  padding: 0.55rem 1.4rem;
   font-family: inherit;
   font-size: 1.02rem;
   font-weight: 400;

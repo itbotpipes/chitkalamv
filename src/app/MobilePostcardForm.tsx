@@ -137,7 +137,7 @@ export default function MobilePostcardForm() {
   };
 
   const triggerError = (msg: string) => {
-    setErrorMessage(msg);
+    alert(msg);
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 500);
   };

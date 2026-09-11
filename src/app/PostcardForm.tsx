@@ -120,7 +120,7 @@ export default function PostcardForm() {
   };
 
   const triggerError = (msg: string) => {
-    setErrorMessage(msg);
+    alert(msg);
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 500);
   };
