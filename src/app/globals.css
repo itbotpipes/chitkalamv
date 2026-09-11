@@ -81,7 +81,7 @@ body {
 .hero-bottom-text-container {
   position: absolute;
   top: 50%;
-  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 40px));
+  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 25px));
   width: 100%;
   padding-top: 10px;
   padding-bottom: 15px;
@@ -148,7 +148,7 @@ body {
 .logo-subtitle {
   font-family: var(--font-cabinet), sans-serif;
   font-weight: 500;
-  font-size: 14.5px;
+  font-size: 10px;
   /* Scaled proportionally */
   line-height: 100%;
   color: white;
@@ -182,7 +182,7 @@ body {
 .hero-face-tr,
 .hero-face-br {
   position: absolute;
-  width: clamp(140px, 30vh, 290px);
+  width: clamp(130px, 28vh, 260px);
   aspect-ratio: 1 / 1;
   transform-origin: center;
   pointer-events: auto;
@@ -190,16 +190,16 @@ body {
 }
 
 .hero-face-tl {
-  left: var(--face-tl-x, -3rem);
-  top: var(--face-tl-y, 23%);
+  left: var(--face-tl-x, -4rem);
+  top: var(--face-tl-y, 20%);
   right: auto;
   bottom: auto;
   transform: rotate(14deg);
 }
 
 .hero-face-bl {
-  left: var(--face-bl-x, -3rem);
-  bottom: var(--face-bl-y, 11%);
+  left: var(--face-bl-x, -2.8rem);
+  bottom: var(--face-bl-y, 9.7%);
   right: auto;
   top: auto;
   transform: rotate(-10deg);
@@ -218,7 +218,7 @@ body {
 
 .hero-face-tr {
   right: var(--face-tr-x, -3rem);
-  top: var(--face-tr-y, 23%);
+  top: var(--face-tr-y, 16%);
   left: auto;
   bottom: auto;
   transform: rotate(-14deg);
@@ -237,7 +237,7 @@ body {
 
 .hero-face-br {
   right: var(--face-br-x, -3rem);
-  bottom: var(--face-br-y, 11%);
+  bottom: var(--face-br-y, 9.7%);
   left: auto;
   top: auto;
   transform: rotate(10deg);
