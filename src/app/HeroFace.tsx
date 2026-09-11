@@ -144,7 +144,7 @@ export default function HeroFace() {
       onMouseLeave={handleMouseLeave}
       style={{ pointerEvents: 'auto' }}
     >
-      <div className="eye-container left-eye-container" style={{ opacity: showGif ? 0 : 1, transition: 'none' }}>
+      <div className="eye-container left-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
           src="/faces/eyes.svg"
           alt=""
@@ -152,7 +152,7 @@ export default function HeroFace() {
           ref={leftEyeRef}
         />
       </div>
-      <div className="eye-container right-eye-container" style={{ opacity: showGif ? 0 : 1, transition: 'none' }}>
+      <div className="eye-container right-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
           src="/faces/eyes.svg"
           alt=""
@@ -170,8 +170,7 @@ export default function HeroFace() {
         className="hero-face-gif"
         style={{
           opacity: showGif ? 1 : 0,
-          pointerEvents: 'none',
-          transition: 'none'
+          pointerEvents: 'none'
         }}
       />
 
@@ -182,7 +181,7 @@ export default function HeroFace() {
         sizes="(max-width: 768px) 78vw, 38vw"
         priority
         className="hero-face-image"
-        style={{ opacity: showGif ? 0 : 1, transition: 'none' }}
+        style={{ opacity: showGif ? 0 : 1 }}
       />
     </div>
   );
