@@ -81,7 +81,7 @@ body {
 .hero-bottom-text-container {
   position: absolute;
   top: 50%;
-  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 25px));
+  transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + 19px));
   width: 100%;
   padding-top: 10px;
   padding-bottom: 15px;
@@ -191,15 +191,15 @@ body {
 
 .hero-face-tl {
   left: var(--face-tl-x, -4rem);
-  top: var(--face-tl-y, 20%);
+  top: var(--face-tl-y, 20.6%);
   right: auto;
   bottom: auto;
   transform: rotate(14deg);
 }
 
 .hero-face-bl {
-  left: var(--face-bl-x, -2.8rem);
-  bottom: var(--face-bl-y, 9.7%);
+  left: var(--face-bl-x, -3rem);
+  bottom: var(--face-bl-y, 8.3%);
   right: auto;
   top: auto;
   transform: rotate(-10deg);
@@ -218,7 +218,7 @@ body {
 
 .hero-face-tr {
   right: var(--face-tr-x, -3rem);
-  top: var(--face-tr-y, 16%);
+  top: var(--face-tr-y, 16.5%);
   left: auto;
   bottom: auto;
   transform: rotate(-14deg);
@@ -237,7 +237,7 @@ body {
 
 .hero-face-br {
   right: var(--face-br-x, -3rem);
-  bottom: var(--face-br-y, 9.7%);
+  bottom: var(--face-br-y, 8.3%);
   left: auto;
   top: auto;
   transform: rotate(10deg);
@@ -897,7 +897,7 @@ body {
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: none;
 }
 
 @keyframes fadeInUp {
@@ -935,12 +935,47 @@ body {
   margin-bottom: 1.2rem;
 }
 
-.services-step .step-main-label {
-  margin-bottom: 0.8rem;
+.services-step {
+  margin-top: -2.2rem;
+  margin-left: -0.6rem;
 }
 
-.services-step .services-pill-grid {
-  margin-bottom: 1.3rem;
+.services-step .step-main-label {
+  margin-bottom: 1rem;
+}
+
+.services-pill-grid {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: start;
+  gap: 0.6rem 0.65rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.service-pill {
+  background: transparent;
+  border: 1px solid #a31417;
+  border-radius: 30px;
+  color: #a31417;
+  padding: 0.35rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s ease;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.services-step .next-btn {
+  margin-top: 2rem;
+  margin-right: -0.6rem;
 }
 
 .notes-step {
@@ -1128,29 +1163,10 @@ body {
   margin: 0;
   padding: 0.2rem 0;
   position: relative;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.premium-btn::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #A71714;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
 }
 
 .premium-btn:hover {
-  transform: translateX(5px);
-}
-
-.premium-btn:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  transform: none;
 }
 
 .footer-logo {
@@ -1167,14 +1183,13 @@ body {
   text-align: center;
 }
 
-/* Services Checkbox Grid */
-.services-checkbox-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 1.1rem;
-  column-gap: 1.5rem;
-  margin-bottom: 2rem;
-  width: 100%;
+.service-pill:hover {
+  background-color: rgba(167, 23, 20, 0.08);
+}
+
+.service-pill.selected {
+  background-color: #A71714;
+  color: #ffffff;
 }
 
 .service-checkbox-label {
@@ -1332,8 +1347,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background-color: #A71714;
   transition: all 0.3s ease;
@@ -1359,6 +1374,13 @@ body {
   justify-content: center;
   pointer-events: none;
   animation: fadeInSelector 0.3s ease forwards;
+}
+
+.nav-selector img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 @keyframes fadeInSelector {
@@ -3014,5 +3036,93 @@ body {
 
   .mob-postcard-section .country-select {
     font-size: 1.15rem !important;
+  }
+}
+
+/* ========================================================================= */
+/* Top-Right Toast Notifications                                            */
+/* ========================================================================= */
+.toast-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.toast-card {
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 380px;
+  background: #ffffff;
+  color: #A71714;
+  border-left: 5px solid #A71714;
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  animation: slideInRight 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  font-family: var(--font-cabinet), 'Poppins', sans-serif;
+}
+
+.toast-card.success {
+  border-left-color: #2e7d32;
+  color: #1b5e20;
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #A71714;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.toast-card.success .toast-icon {
+  background: #2e7d32;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #888888;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+  color: #111111;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

@@ -2,6 +2,7 @@
 
 import emailjs from '@emailjs/browser';
 import React, { useState, useEffect, useRef } from 'react';
+import { useToast } from './ToastNotification';
 
 const POSTCARD_BACKGROUNDS = [
   '/postcard/name-postcard.webp',
@@ -12,6 +13,7 @@ const POSTCARD_BACKGROUNDS = [
 ];
 
 export default function PostcardForm() {
+  const { showToast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isShaking, setIsShaking] = useState(false);
@@ -34,13 +36,12 @@ export default function PostcardForm() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          // Change scrollbar color to match postcard & footer
           document.documentElement.style.setProperty('--scrollbar-thumb', '#ffffff');
           document.documentElement.style.setProperty('--scrollbar-track', '#E34234');
           document.documentElement.style.setProperty('--scrollbar-border', '#E34234');
         }
       },
-      { threshold: 0.2 } // Trigger when at least 20% of the section is visible
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -120,7 +121,7 @@ export default function PostcardForm() {
   };
 
   const triggerError = (msg: string) => {
-    alert(msg);
+    showToast(msg, 'error');
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 500);
   };
@@ -185,13 +186,13 @@ export default function PostcardForm() {
           publicKey: 'LObISpNTHrDTUpMUl',
         }
       );
-      alert('Postcard sent successfully!');
+      showToast('Postcard sent successfully!', 'success');
       setCurrentStep(0);
       setFormData({ name: '', org: '', phone: '', countryCode: '+91', email: '', services: [], notes: '' });
       setErrorMessage('');
     } catch (error: any) {
       console.error('FAILED...', error?.text || error?.message || JSON.stringify(error));
-      alert(`Failed to send postcard: ${error?.text || 'Unknown error'}. Please check console.`);
+      showToast(`Failed to send postcard: ${error?.text || 'Unknown error'}`, 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -290,7 +291,7 @@ export default function PostcardForm() {
               <div className={`form-step fade-in-up services-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Pick what sparked this postcard.</label>
                 
-                <div className="services-checkbox-grid">
+                <div className="services-pill-grid">
                   {[
                     "Brand Identity", 
                     "Digital & Motion", 
@@ -298,19 +299,27 @@ export default function PostcardForm() {
                     "Website Design/Devlopment", 
                     "Illustration", 
                     "Brand/Design Consultation"
-                  ].map((service) => (
-                    <label key={service} className="service-checkbox-label">
-                      <input 
-                        type="checkbox" 
-                        className="service-checkbox" 
-                        onChange={e => { handleServiceChange(e); setErrorMessage(''); }} 
-                        checked={formData.services.includes(service)} 
-                        value={service} 
-                      />
-                      <span className="custom-checkbox"></span>
-                      <span className="service-checkbox-text">{service}</span>
-                    </label>
-                  ))}
+                  ].map((service) => {
+                    const isSelected = formData.services.includes(service);
+                    return (
+                      <button
+                        key={service}
+                        type="button"
+                        className={`service-pill ${isSelected ? 'selected' : ''}`}
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            services: isSelected 
+                              ? prev.services.filter(s => s !== service)
+                              : [...prev.services, service]
+                          }));
+                          setErrorMessage('');
+                        }}
+                      >
+                        {service}
+                      </button>
+                    );
+                  })}
                 </div>
                 {errorMessage && <p className="step-error-msg">{errorMessage}</p>}
                 <button className="next-btn premium-btn" onClick={() => handleNext(4)}>Next &gt;&gt;&gt;</button>

@@ -48,9 +48,9 @@ export default function MobilePostcardForm() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleService = (service: string) => {
+  const handleServiceToggle = (serviceName: string) => {
     setSelectedServices(prev => 
-      prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
+      prev.includes(serviceName) ? prev.filter(s => s !== serviceName) : [...prev, serviceName]
     );
     setErrorMessage('');
   };
@@ -137,7 +137,7 @@ export default function MobilePostcardForm() {
   };
 
   const triggerError = (msg: string) => {
-    alert(msg);
+    showToast(msg, 'error');
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 500);
   };
@@ -202,14 +202,14 @@ export default function MobilePostcardForm() {
           publicKey: 'LObISpNTHrDTUpMUl',
         }
       );
-      alert('Postcard sent successfully!');
+      showToast('Postcard sent successfully!', 'success');
       setCurrentStep(0);
       setFormData({ name: '', org: '', phone: '', countryCode: '+91', email: '', notes: '' });
       setSelectedServices([]);
       setErrorMessage('');
     } catch (error: any) {
       console.error('FAILED...', error?.text || error?.message || JSON.stringify(error));
-      alert(`Failed to send postcard: ${error?.text || 'Unknown error'}. Please check console.`);
+      showToast(`Failed to send postcard: ${error?.text || 'Unknown error'}`, 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -311,7 +311,7 @@ export default function MobilePostcardForm() {
               <div className={`form-step fade-in-up services-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Pick what sparked this postcard.</label>
                 
-                <div className="services-checkbox-grid" style={{ rowGap: '0.6rem', columnGap: '0.8rem', marginBottom: '0.8rem' }}>
+                <div className="services-pill-grid" style={{ rowGap: '0.6rem', columnGap: '0.6rem', marginBottom: '0.8rem' }}>
                   {[
                     "Brand Identity", 
                     "Digital & Motion", 
@@ -319,19 +319,20 @@ export default function MobilePostcardForm() {
                     "Website Design/Devlopment", 
                     "Illustration", 
                     "Brand/Design Consultation"
-                  ].map((service) => (
-                    <label key={service} className="service-checkbox-label" style={{ fontSize: '0.8rem' }}>
-                      <input 
-                        type="checkbox" 
-                        className="service-checkbox" 
-                        onChange={() => toggleService(service)} 
-                        checked={selectedServices.includes(service)} 
-                        value={service} 
-                      />
-                      <span className="custom-checkbox" style={{ height: '14px', width: '14px', minWidth: '14px' }}></span>
-                      <span className="service-checkbox-text" style={{ fontSize: '0.75rem', whiteSpace: 'normal', lineHeight: 1.2 }}>{service}</span>
-                    </label>
-                  ))}
+                  ].map((service) => {
+                    const isSelected = selectedServices.includes(service);
+                    return (
+                      <button
+                        key={service}
+                        type="button"
+                        className={`service-pill ${isSelected ? 'selected' : ''}`}
+                        style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem' }}
+                        onClick={() => handleServiceToggle(service)}
+                      >
+                        {service}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {errorMessage && <p className="step-error-msg">{errorMessage}</p>}
