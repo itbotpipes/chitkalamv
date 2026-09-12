@@ -2,6 +2,7 @@
 
 import emailjs from '@emailjs/browser';
 import React, { useState, useEffect, useRef } from 'react';
+import { useToast } from './ToastNotification';
 
 const POSTCARD_BACKGROUNDS = [
   '/postcard/name-postcard.webp',
@@ -20,6 +21,7 @@ const POSTCARD_BACKGROUNDS_MOBILE = [
 ];
 
 export default function MobilePostcardForm() {
+  const { showToast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isShaking, setIsShaking] = useState(false);
@@ -230,7 +232,7 @@ export default function MobilePostcardForm() {
           />
         ))}
         
-        <div className="mob-postcard-form-area">
+        <div className={`mob-postcard-form-area ${currentStep === 2 ? 'contact-step-active' : currentStep === 4 ? 'notes-step-active' : ''}`}>
           <div className="form-step-wrapper">
             {currentStep === 0 && (
               <div className={`form-step fade-in-up ${isShaking ? 'shake' : ''}`}>
@@ -274,8 +276,8 @@ export default function MobilePostcardForm() {
               <div className={`form-step fade-in-up contact-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Where should our reply land?</label>
                 <div className="input-group" style={{ marginTop: '0.8rem' }}>
-                  <div className="phone-input-row" style={{ marginBottom: '0.8rem' }}>
-                    <div className="phone-boxes" style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                  <div className="phone-input-row">
+                    <div className="phone-boxes">
                       {[...Array(10)].map((_, i) => (
                         <input
                           type="tel"
@@ -291,7 +293,7 @@ export default function MobilePostcardForm() {
                     </div>
                   </div>
                 </div>
-                <div className="input-group">
+                <div className="input-group email-input-group">
                   <span className="input-label">Email</span>
                   <input 
                     type="email" 
@@ -311,11 +313,11 @@ export default function MobilePostcardForm() {
               <div className={`form-step fade-in-up services-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Pick what sparked this postcard.</label>
                 
-                <div className="services-pill-grid" style={{ rowGap: '0.6rem', columnGap: '0.6rem', marginBottom: '0.8rem' }}>
+                <div className="services-pill-grid">
                   {[
                     "Brand Identity", 
-                    "Website Design/Devlopment", 
                     "Print Design", 
+                    "Website Design/Development", 
                     "Digital & Motion", 
                     "Illustration", 
                     "Brand/Design Consultation"
@@ -326,7 +328,6 @@ export default function MobilePostcardForm() {
                         key={service}
                         type="button"
                         className={`service-pill ${isSelected ? 'selected' : ''}`}
-                        style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem' }}
                         onClick={() => handleServiceToggle(service)}
                       >
                         {service}
@@ -345,7 +346,7 @@ export default function MobilePostcardForm() {
                 <label className="step-main-label">This is your moment, pen it!</label>
                 <div className="textarea-wrapper">
                   <textarea 
-                    rows={3} 
+                    rows={2} 
                     className="notes-textarea" 
                     placeholder="Additional Notes:" 
                     value={formData.notes} 
@@ -353,7 +354,7 @@ export default function MobilePostcardForm() {
                   ></textarea>
                 </div>
                 {errorMessage && <p className="step-error-msg">{errorMessage}</p>}
-                <button className="submit-btn premium-submit-btn" onClick={handleSubmit} disabled={isSubmitting}>{isSubmitting ? "Sending..." : "Drop it in the box!"}</button>
+                <button className="submit-btn mob-submit-btn" onClick={handleSubmit} disabled={isSubmitting}>{isSubmitting ? "Sending..." : "Drop it in the box!"}</button>
               </div>
             )}
           </div>
