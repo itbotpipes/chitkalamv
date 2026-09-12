@@ -948,12 +948,15 @@ body {
 }
 
 .services-pill-grid {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  justify-content: start;
-  gap: 0.65rem;
-  margin-bottom: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.55rem 0.6rem;
+  margin-bottom: 1.45rem;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .service-pill {
@@ -961,9 +964,9 @@ body {
   border: 1px solid #a31417;
   border-radius: 30px;
   color: #a31417;
-  padding: 0.35rem 0.85rem;
+  padding: 0.35rem 0.8rem;
   font-family: inherit;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   font-weight: 400;
   cursor: pointer;
   text-align: center;
@@ -973,7 +976,8 @@ body {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  width: max-content;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .services-step .next-btn {
@@ -2607,13 +2611,19 @@ body {
   }
 
   .services-pill-grid {
-    gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.45rem 0.5rem;
     margin-bottom: 0.7rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   .service-pill {
-    padding: 0.35rem 0.8rem;
-    font-size: 0.74rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
   }
 
   .notes-textarea {
