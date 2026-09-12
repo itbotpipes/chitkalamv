@@ -95,6 +95,7 @@ body {
 
 .hero-bottom-text-scroller {
   display: flex;
+  width: max-content;
   white-space: nowrap;
   font-family: var(--font-cabinet), sans-serif;
   font-weight: 500;
@@ -105,15 +106,27 @@ body {
 }
 
 .hero-bottom-text-scroller span {
-  padding-right: 2rem;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.hero-bottom-text-scroller span::after {
+  content: "\00a0\2022\00a0";
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 @media (min-width: 769px) {
   .hero-bottom-text-scroller {
+    width: 100%;
     justify-content: center;
   }
 
-  .hero-bottom-text-scroller span:nth-child(2) {
+  .hero-bottom-text-scroller span:nth-child(n+2) {
+    display: none;
+  }
+
+  .hero-bottom-text-scroller span::after {
     display: none;
   }
 }
@@ -1591,22 +1604,23 @@ body {
 
 /* Specific overlay positioning ONLY for Contact Card (Step 2) */
 .mob-postcard-form-area.contact-step-active {
-  top: 60%;
-  width: 86%;
-  padding: 0;
+  top: 64% !important;
+  width: 86% !important;
+  padding: 0 !important;
 }
 
 .mob-postcard-form-area.contact-step-active .step-main-label {
   display: block;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  margin-bottom: 0.4rem;
+  margin-top: 0;
+  margin-bottom: 0.2rem;
   text-align: center;
 }
 
 .mob-postcard-form-area.contact-step-active .phone-input-row {
-  margin-top: 0.2rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
   width: 100%;
 }
 
@@ -1621,8 +1635,8 @@ body {
   flex: 1;
   min-width: 0;
   width: auto;
-  height: 2.1rem;
-  font-size: 1rem;
+  height: 1.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
   border: 1.5px solid #A71714;
   border-right: none;
@@ -1649,15 +1663,16 @@ body {
 }
 
 .mob-postcard-form-area.contact-step-active .email-input-group {
-  margin-top: 0.3rem;
+  margin-top: 0.15rem;
+  margin-bottom: 0.1rem;
   width: 100%;
 }
 
 .mob-postcard-form-area.contact-step-active .email-input-group .input-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.05rem;
   text-align: center;
 }
 
@@ -1666,10 +1681,53 @@ body {
   border-bottom: 1.5px solid #A71714;
   background: transparent;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #A71714;
   width: 100%;
-  padding: 0.2rem 0;
+  padding: 0.15rem 0;
+}
+
+/* Specific overlay positioning ONLY for Services Card (Step 3) */
+.mob-postcard-form-area.services-step-active {
+  top: 64% !important;
+  width: 86% !important;
+  padding: 0.8rem !important;
+}
+
+.mob-postcard-form-area.services-step-active .step-main-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  text-align: center;
+}
+
+.mob-postcard-form-area.services-step-active .services-pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.3rem;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0.35rem;
+  box-sizing: border-box;
+}
+
+.mob-postcard-form-area.services-step-active .service-pill {
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: #A71714;
+  background: transparent;
+  border: 1.5px solid #A71714;
+  border-radius: 20px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .mob-postcard-section .step-main-label {
@@ -1989,32 +2047,32 @@ body {
   padding: 0.2rem 0;
   position: relative;
   border-radius: 0;
-  transition: transform 0.2s ease, opacity 0.2s ease;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-decoration: none;
 }
 
 .mob-postcard-section .next-btn::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #A71714;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
+  display: none !important;
+  content: none !important;
 }
 
 .mob-postcard-section .next-btn:hover,
-.mob-postcard-section .next-btn:active {
-  transform: translateX(4px);
+.mob-postcard-section .next-btn:active,
+.mob-postcard-section .next-btn:focus {
+  transform: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 
 .mob-postcard-section .next-btn:hover::after,
-.mob-postcard-section .next-btn:active::after {
-  transform: scaleX(1);
-  transform-origin: left;
+.mob-postcard-section .next-btn:active::after,
+.mob-postcard-section .next-btn:focus::after {
+  display: none !important;
+  content: none !important;
+  transform: none !important;
 }
 
 /* Phone boxes override removed to use unified style above */
@@ -2212,22 +2270,33 @@ body {
     text-align: center;
   }
 
+  .logo-image,
+  .logo-container img {
+    height: 52px !important;
+    width: auto !important;
+  }
+
+  .logo-subtitle {
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+  }
+
   .sound-toggle-btn {
     bottom: 1.5rem;
-    left: 50%;
-    right: auto;
+    right: 1.5rem;
+    left: auto;
     width: 44px;
     height: 44px;
-    transform: translateX(-50%);
+    transform: none;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .sound-toggle-btn:hover {
-    transform: translateX(-50%) translateY(-2px) scale(1.05);
+    transform: translateY(-2px) scale(1.05);
   }
 
   .sound-toggle-btn:active {
-    transform: translateX(-50%) translateY(1px) scale(0.95);
+    transform: translateY(1px) scale(0.95);
   }
 
   .nav-links {
@@ -2241,7 +2310,7 @@ body {
     top: 23%;
     right: auto;
     bottom: auto;
-    width: clamp(75px, 20vw, 110px);
+    width: clamp(100px, 28vw, 145px);
     transform: rotate(12deg);
   }
 
@@ -2257,8 +2326,9 @@ body {
     position: relative;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
   }
 
   .hero-face-bl {
@@ -2267,7 +2337,7 @@ body {
     bottom: 10%;
     right: auto;
     top: auto;
-    width: clamp(75px, 20vw, 110px);
+    width: clamp(100px, 28vw, 145px);
     transform: rotate(-8deg);
   }
 
@@ -2277,7 +2347,7 @@ body {
     top: 23%;
     left: auto;
     bottom: auto;
-    width: clamp(75px, 20vw, 110px);
+    width: clamp(100px, 28vw, 145px);
     transform: rotate(-12deg);
   }
 
@@ -2287,7 +2357,7 @@ body {
     bottom: 10%;
     left: auto;
     top: auto;
-    width: clamp(75px, 20vw, 110px);
+    width: clamp(100px, 28vw, 145px);
     transform: rotate(8deg);
   }
 
@@ -2327,19 +2397,18 @@ body {
 
   .hero-bottom-text-scroller {
     font-size: clamp(100px, 25vw, 200px);
-    animation: marquee 10s linear infinite;
+    animation: marquee 14s linear infinite;
+    will-change: transform;
   }
 
   @keyframes marquee {
     0% {
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
     }
 
     100% {
-      transform: translateX(-50%);
+      transform: translate3d(-50%, 0, 0);
     }
-
-    /* Shift left by exactly one span width */
   }
 
   .scroll-text-section {
@@ -2349,7 +2418,7 @@ body {
   }
 
   .scroll-text-paragraph {
-    font-size: clamp(1.05rem, 4.2vw, 1.45rem);
+    font-size: clamp(1.28rem, 5.08vw, 1.76rem);
     line-height: 1.4;
     letter-spacing: -0.015em;
     gap: 0.1em 0.28em;
@@ -2371,7 +2440,7 @@ body {
 
   .reveal-gif {
     height: auto;
-    width: 1.8em;
+    width: 2.2em;
     border-radius: 3px;
   }
 
@@ -2840,23 +2909,23 @@ body {
     display: none;
   }
 
-  /* Sound toggle — bottom center like mobile */
+  /* Sound toggle — bottom right for mobile */
   .sound-toggle-btn {
     bottom: 1rem;
-    left: 50%;
-    right: auto;
+    right: 1rem;
+    left: auto;
     width: 40px;
     height: 40px;
-    transform: translateX(-50%);
+    transform: none;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .sound-toggle-btn:hover {
-    transform: translateX(-50%) translateY(-2px) scale(1.05);
+    transform: translateY(-2px) scale(1.05);
   }
 
   .sound-toggle-btn:active {
-    transform: translateX(-50%) translateY(1px) scale(0.95);
+    transform: translateY(1px) scale(0.95);
   }
 
   /* Corner faces — scaled down + repositioned for short viewport */

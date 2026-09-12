@@ -232,7 +232,7 @@ export default function MobilePostcardForm() {
           />
         ))}
         
-        <div className={`mob-postcard-form-area ${currentStep === 2 ? 'contact-step-active' : currentStep === 4 ? 'notes-step-active' : ''}`}>
+        <div className={`mob-postcard-form-area ${currentStep === 2 ? 'contact-step-active' : currentStep === 3 ? 'services-step-active' : currentStep === 4 ? 'notes-step-active' : ''}`}>
           <div className="form-step-wrapper">
             {currentStep === 0 && (
               <div className={`form-step fade-in-up ${isShaking ? 'shake' : ''}`}>
@@ -275,7 +275,7 @@ export default function MobilePostcardForm() {
             {currentStep === 2 && (
               <div className={`form-step fade-in-up contact-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Where should our reply land?</label>
-                <div className="input-group" style={{ marginTop: '0.8rem' }}>
+                <div className="input-group" style={{ marginTop: '0.2rem' }}>
                   <div className="phone-input-row">
                     <div className="phone-boxes">
                       {[...Array(10)].map((_, i) => (

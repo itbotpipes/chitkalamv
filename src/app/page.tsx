@@ -73,7 +73,7 @@ export default function Home() {
         <div className="footer-divider"></div>
         <div className="footer-logo">
           <Image
-            src="/studiochitkala-logo.png"
+            src="/chitkala-logo.svg"
             alt="Studio Chitkala"
             width={800}
             height={256}
