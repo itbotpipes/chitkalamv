@@ -106,48 +106,11 @@ export default function HandFlowers() {
     };
   }, []);
 
-  const lastToggleTimeRef = useRef<number>(0);
+  const currentlyHoveredRef = useRef<string | null>(null);
 
-  const activateFlower = (flowerId: string) => {
-    const now = Date.now();
-    if (now - lastToggleTimeRef.current < 300) {
-      return;
-    }
-    lastToggleTimeRef.current = now;
+  const startDeactivateTimer = (flowerId: string) => {
+    if (timeoutMapRef.current.has(flowerId)) return;
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    const useTouchMode = isMobile || isTouchDevice;
-
-    if (useTouchMode) {
-      timeoutMapRef.current.forEach((timeout) => clearTimeout(timeout));
-      timeoutMapRef.current.clear();
-      setActiveFlowers((prev) => {
-        if (prev.has(flowerId)) {
-          return new Set();
-        }
-        return new Set([flowerId]);
-      });
-      return;
-    }
-
-    const existing = timeoutMapRef.current.get(flowerId);
-    if (existing) {
-      clearTimeout(existing);
-      timeoutMapRef.current.delete(flowerId);
-    }
-    setActiveFlowers((prev) => {
-      const next = new Set(prev);
-      next.add(flowerId);
-      return next;
-    });
-  };
-
-  const deactivateFlowerDelayed = (flowerId: string) => {
-    const existing = timeoutMapRef.current.get(flowerId);
-    if (existing) {
-      clearTimeout(existing);
-    }
     const timeout = setTimeout(() => {
       setActiveFlowers((prev) => {
         const next = new Set(prev);
@@ -156,8 +119,63 @@ export default function HandFlowers() {
       });
       timeoutMapRef.current.delete(flowerId);
     }, 1000);
+
     timeoutMapRef.current.set(flowerId, timeout);
   };
+
+  const handleFlowerHover = React.useCallback((flowerId: string) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    if (isMobile || isTouchDevice) return;
+
+    if (currentlyHoveredRef.current === flowerId) return;
+    const prevHovered = currentlyHoveredRef.current;
+    currentlyHoveredRef.current = flowerId;
+
+    const existingTimeout = timeoutMapRef.current.get(flowerId);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
+      timeoutMapRef.current.delete(flowerId);
+    }
+
+    setActiveFlowers((prev) => {
+      const next = new Set(prev);
+      next.add(flowerId);
+      return next;
+    });
+
+    if (prevHovered && prevHovered !== flowerId) {
+      startDeactivateTimer(prevHovered);
+    }
+  }, []);
+
+  const handleFlowerLeave = React.useCallback(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    if (isMobile || isTouchDevice) return;
+
+    const hovered = currentlyHoveredRef.current;
+    currentlyHoveredRef.current = null;
+
+    if (hovered) {
+      startDeactivateTimer(hovered);
+    }
+  }, []);
+
+  const handleFlowerClick = React.useCallback((flowerId: string) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    if (isMobile || isTouchDevice) {
+      timeoutMapRef.current.forEach((t) => clearTimeout(t));
+      timeoutMapRef.current.clear();
+      setActiveFlowers((prev) => {
+        if (prev.has(flowerId)) {
+          return new Set();
+        }
+        return new Set([flowerId]);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     let rafId: number;
@@ -192,6 +210,29 @@ export default function HandFlowers() {
     return () => cancelAnimationFrame(rafId);
   }, [totalFlowers]);
 
+  useEffect(() => {
+    setActiveFlowers((prev) => {
+      if (prev.size === 0) return prev;
+      const next = new Set(prev);
+      let changed = false;
+      const flowerWindow = 1 / totalFlowers;
+      FLOWERS.forEach((flower, index) => {
+        const startProgress = index * flowerWindow;
+        let localProgress = 0;
+        if (scrollProgress >= startProgress + flowerWindow) {
+          localProgress = 1;
+        } else if (scrollProgress > startProgress) {
+          localProgress = (scrollProgress - startProgress) / flowerWindow;
+        }
+        if (localProgress <= 0.5 && next.has(flower.id)) {
+          next.delete(flower.id);
+          changed = true;
+        }
+      });
+      return changed ? next : prev;
+    });
+  }, [scrollProgress, totalFlowers]);
+
   // Build the dynamic classes for reveal and hover
   const containerClasses = ['hand-svg-master-wrapper'];
   FLOWERS.forEach((flower, index) => {
@@ -215,18 +256,6 @@ export default function HandFlowers() {
     }
   });
 
-  const handleFlowerHover = React.useCallback((id: string) => {
-    activateFlower(id);
-  }, []);
-
-  const handleFlowerLeave = React.useCallback(() => {
-    FLOWERS.forEach(f => deactivateFlowerDelayed(f.id));
-  }, []);
-
-  const handleFlowerClick = React.useCallback((id: string) => {
-    activateFlower(id);
-  }, []);
-
   return (
     <div className="hand-flowers-section">
       <div className="hand-flowers-container">
@@ -243,8 +272,8 @@ export default function HandFlowers() {
 
         {/* Tickets */}
         {FLOWERS.map((flower) => {
-          const isActive = activeFlowers.has(flower.id);
           const isRevealed = containerClasses.includes(`reveal-${flower.id}`);
+          const isActive = activeFlowers.has(flower.id) && isRevealed;
 
           return (
             <div key={flower.id} className="flower-item">
@@ -267,7 +296,7 @@ export default function HandFlowers() {
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (isRevealed) activateFlower(flower.id);
+                  if (isRevealed) handleFlowerClick(flower.id);
                 }}
               >
                 <div className="mobile-flower-indicator" />
