@@ -1604,7 +1604,7 @@ body {
 
 /* Specific overlay positioning ONLY for Contact Card (Step 2) */
 .mob-postcard-form-area.contact-step-active {
-  top: 64% !important;
+  top: 62.5% !important;
   width: 86% !important;
   padding: 0 !important;
 }
@@ -1687,11 +1687,23 @@ body {
   padding: 0.15rem 0;
 }
 
+/* Tweak the Contact card Next button specifically */
+.mob-postcard-form-area.contact-step-active .next-btn {
+  align-self: flex-end !important;
+  margin-top: 0.68rem !important;
+  margin-right: 1rem !important;
+}
+
 /* Specific overlay positioning ONLY for Services Card (Step 3) */
 .mob-postcard-form-area.services-step-active {
-  top: 64% !important;
+  top: 58% !important;
   width: 86% !important;
-  padding: 0.8rem !important;
+  padding: 0 !important;
+}
+
+.mob-postcard-form-area.services-step-active .services-step {
+  margin: 0 !important;
+  width: 100% !important;
 }
 
 .mob-postcard-form-area.services-step-active .step-main-label {
@@ -1728,6 +1740,17 @@ body {
   max-width: 100%;
   transition: all 0.2s ease;
   box-sizing: border-box;
+}
+
+.mob-postcard-form-area.services-step-active .next-btn {
+  align-self: flex-end !important;
+  margin-right: 1rem !important;
+  margin-top: 2rem !important;
+  font-family: inherit !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  color: #A71714 !important;
+  opacity: 1 !important;
 }
 
 .mob-postcard-section .step-main-label {
