@@ -43,3 +43,6 @@ next-env.d.ts
 # AI Assistant configs
 AGENTS.md
 CLAUDE.md
+
+# Scratch directory
+scratch/

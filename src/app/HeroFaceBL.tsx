@@ -94,12 +94,13 @@ export default function HeroFaceBL() {
       const dy = mouse.y - centerY;
       const angle = Math.atan2(dy, dx);
 
-      const maxMove = rect.width * 0.25;
-      const dist = Math.min(Math.hypot(dx, dy) * 0.1, maxMove);
+      const maxMoveX = rect.width * 0.06;
+      const maxMoveY = rect.height * 0.001;
+      const rawDist = Math.hypot(dx, dy) * 0.04;
 
       return {
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist,
+        x: Math.cos(angle) * Math.min(rawDist, maxMoveX),
+        y: Math.sin(angle) * Math.min(rawDist, maxMoveY),
       };
     };
 
@@ -141,7 +142,7 @@ export default function HeroFaceBL() {
       onMouseLeave={handleMouseLeave}
       style={{ pointerEvents: 'auto' }}
     >
-      <div className="eye-container bl-left-eye-container">
+      <div className="eye-container bl-left-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
           src="/faces/eyes.svg"
           alt=""
@@ -149,7 +150,7 @@ export default function HeroFaceBL() {
           ref={leftEyeRef}
         />
       </div>
-      <div className="eye-container bl-right-eye-container">
+      <div className="eye-container bl-right-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
           src="/faces/eyes.svg"
           alt=""
@@ -162,7 +163,7 @@ export default function HeroFaceBL() {
       <img
         key={gifKey}
         ref={gifRef}
-        src="/facesgifs/BottomLeftFace.webp"
+        src="/facesgifs/Bottom-Left-Face-1024-Transperent.gif"
         alt=""
         className="hero-face-gif"
         style={{
@@ -172,12 +173,13 @@ export default function HeroFaceBL() {
       />
 
       <Image
-        src="/faces/face-bl.webp"
+        src="/facesgifs/Bottom Left Face 1024 Transperent.png"
         alt=""
         fill
         sizes="(max-width: 768px) 78vw, 38vw"
         priority
         className="hero-face-image"
+        style={{ opacity: showGif ? 0 : 1 }}
       />
     </div>
   );
