@@ -94,13 +94,12 @@ export default function HeroFaceBL() {
       const dy = mouse.y - centerY;
       const angle = Math.atan2(dy, dx);
 
-      const maxMoveX = rect.width * 0.06;
-      const maxMoveY = rect.height * 0.001;
-      const rawDist = Math.hypot(dx, dy) * 0.04;
+      const maxMove = rect.width * 0.25;
+      const dist = Math.min(Math.hypot(dx, dy) * 0.1, maxMove);
 
       return {
-        x: Math.cos(angle) * Math.min(rawDist, maxMoveX),
-        y: Math.sin(angle) * Math.min(rawDist, maxMoveY),
+        x: Math.cos(angle) * dist,
+        y: Math.sin(angle) * dist,
       };
     };
 
@@ -173,7 +172,7 @@ export default function HeroFaceBL() {
       />
 
       <Image
-        src="/facesgifs/Bottom Left Face 1024 Transperent.png"
+        src="/faces/Bottom Left Face without eyes with BG.png"
         alt=""
         fill
         sizes="(max-width: 768px) 78vw, 38vw"

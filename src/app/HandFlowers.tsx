@@ -17,7 +17,7 @@ const FLOWERS: FlowerData[] = [
     name: 'Blue Lotus',
     quote: '"Something catches\nyour attention."',
     imgSrc: '/handflowers/fl3-p.webp',
-    ticketStyle: { top: '-31%', left: '-12%' },
+    ticketStyle: { top: '-31%', left: '-28%' },
     dotPosition: { top: '19%', left: '42%' },
   },
   {
