@@ -97,9 +97,31 @@ export default function HeroFaceBL() {
       const maxMove = rect.width * 0.25;
       const dist = Math.min(Math.hypot(dx, dy) * 0.1, maxMove);
 
+      let targetX = Math.cos(angle) * dist;
+      let targetY = Math.sin(angle) * dist;
+
+      // Limit X-axis movement:
+      // The outer eye socket on the left narrows significantly. Limit leftward movement so it doesn't clip.
+      if (targetX < 0) {
+        targetX = Math.max(targetX * 0.45, -rect.width * 0.10);
+      } else {
+        targetX = Math.min(targetX, rect.width * 0.22);
+      }
+
+      // Limit Y-axis movement:
+      // The upper eyelid is very low. Limit upward movement.
+      // When looking towards top-left (targetX < 0), the eyelid corner drops even lower, so restrict upward range further.
+      if (targetY < 0) {
+        const upFactor = targetX < 0 ? 0.2 : 0.28;
+        const maxUp = targetX < 0 ? rect.width * 0.045 : rect.width * 0.065;
+        targetY = Math.max(targetY * upFactor, -maxUp);
+      } else {
+        targetY = Math.min(targetY, rect.width * 0.18);
+      }
+
       return {
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist,
+        x: targetX,
+        y: targetY,
       };
     };
 
