@@ -234,7 +234,8 @@ body {
 }
 
 .hero-face-bl .eye {
-  width: 42.5%;
+  width: 38%;
+  height: 38%;
 }
 
 .hero-face-tr {
@@ -358,9 +359,22 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: auto;
+  width: 45%;
+  height: 45%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
   display: block;
+}
+
+.eye-left,
+.left-eye-container .eye,
+.bl-left-eye-container .eye,
+.tr-left-eye-container .eye,
+.eye-right,
+.right-eye-container .eye,
+.bl-right-eye-container .eye,
+.tr-right-eye-container .eye {
+  object-position: center;
 }
 
 /* ===== Hand & Flowers Section ===== */

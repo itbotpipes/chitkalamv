@@ -146,17 +146,17 @@ export default function HeroFace() {
     >
       <div className="eye-container left-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
-          src="/faces/eyes.svg"
+          src="/faces/eye-left.png"
           alt=""
-          className="eye"
+          className="eye eye-left"
           ref={leftEyeRef}
         />
       </div>
       <div className="eye-container right-eye-container" style={{ opacity: showGif ? 0 : 1 }}>
         <img
-          src="/faces/eyes.svg"
+          src="/faces/eye-right.png"
           alt=""
-          className="eye"
+          className="eye eye-right"
           ref={rightEyeRef}
         />
       </div>

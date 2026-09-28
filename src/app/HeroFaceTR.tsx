@@ -143,17 +143,17 @@ export default function HeroFaceTR() {
     >
       <div className="eye-container tr-left-eye-container">
         <img
-          src="/faces/eyes.svg"
+          src="/faces/eye-left.png"
           alt=""
-          className="eye"
+          className="eye eye-left"
           ref={leftEyeRef}
         />
       </div>
       <div className="eye-container tr-right-eye-container">
         <img
-          src="/faces/eyes.svg"
+          src="/faces/eye-right.png"
           alt=""
-          className="eye"
+          className="eye eye-right"
           ref={rightEyeRef}
         />
       </div>
