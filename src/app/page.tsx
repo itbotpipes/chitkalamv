@@ -11,6 +11,7 @@ import PostcardForm from './PostcardForm';
 import MobilePostcardForm from './MobilePostcardForm';
 
 import HeroScrollbarObserver from './HeroScrollbarObserver';
+import FlowerUltrawideDevTool from './FlowerUltrawideDevTool';
 
 export default function Home() {
   return (
@@ -82,6 +83,7 @@ export default function Home() {
         </div>
         <p className="copyright-text">© 2026 Studio Chitkala All rights reserved</p>
       </footer>
+      <FlowerUltrawideDevTool />
     </main>
   );
 }

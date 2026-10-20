@@ -304,7 +304,7 @@ export default function HandFlowers() {
 
               {/* Ticket card */}
               <div
-                className={`flower-ticket ${isActive ? 'visible' : ''} ${flower.id !== 'lotus' ? 'enlarged-ticket' : ''}`}
+                className={`flower-ticket ticket-${flower.id} ${isActive ? 'visible' : ''} ${flower.id !== 'lotus' ? 'enlarged-ticket' : ''}`}
                 style={{
                   '--desktop-top': flower.ticketStyle.top,
                   '--desktop-left': flower.ticketStyle.left,
