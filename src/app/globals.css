@@ -3450,42 +3450,44 @@ body {
   transform: translateY(0) scale(var(--ticket-scale, 1)) translateZ(0) !important;
 }
 
-/* ===== 29-inch Ultrawide Display Adjustments (2560x1080) ===== */
-/* Strictly scoped to ~2560px width with ultrawide aspect ratio (>= 21/9) */
-@media screen and (min-width: 2400px) and (min-aspect-ratio: 2/1) {
+/* ===== Large & Ultrawide Display Adjustments (> 1920px Standard Desktop) ===== */
+/* Strictly scoped to displays wider than standard 1080p desktop (1920px). */
+/* Mobile (<= 768px), Tablet (769px-1024px), and Standard Desktop (<= 1920px) are 100% UNTOUCHED. */
+@media screen and (min-width: 1921px) {
   /* Shifts hand & flowers down */
   .hand-flowers-container {
-    transform: translateY(calc(var(--uw-hand-y, 6vh) + var(--hand-y, 0rem)));
+    transform: translateY(calc(var(--large-display-hand-y, var(--uw-hand-y, 6vh)) + var(--hand-y, 0rem)));
   }
 
   /* Shifts hero bottom ticker text down */
   .hero-bottom-text-container {
-    transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + var(--uw-ticker-offset, 50px)));
+    transform: translateY(calc(clamp(135px, 32vh, 315px) * 0.85 + var(--large-display-ticker-offset, var(--uw-ticker-offset, 50px))));
   }
 
-  /* 29" Ultrawide Flower Ticket Positions (controlled dynamically by CSS vars or Dev Studio) */
+  /* Large Display Flower Ticket Positions */
   .flower-ticket.ticket-blue-lotus {
-    top: var(--uw-blue-lotus-top, -31%) !important;
-    left: var(--uw-blue-lotus-left, -28%) !important;
+    top: var(--large-display-blue-lotus-top, var(--uw-blue-lotus-top, -31%)) !important;
+    left: var(--large-display-blue-lotus-left, var(--uw-blue-lotus-left, -28%)) !important;
   }
 
   .flower-ticket.ticket-lotus {
-    top: var(--uw-lotus-top, -18%) !important;
-    left: var(--uw-lotus-left, 112%) !important;
+    top: var(--large-display-lotus-top, var(--uw-lotus-top, -18%)) !important;
+    left: var(--large-display-lotus-left, var(--uw-lotus-left, 112%)) !important;
   }
 
   .flower-ticket.ticket-mango-blossom {
-    top: var(--uw-mango-blossom-top, 65.57%) !important;
-    left: var(--uw-mango-blossom-left, 92%) !important;
+    top: var(--large-display-mango-blossom-top, var(--uw-mango-blossom-top, 65.57%)) !important;
+    left: var(--large-display-mango-blossom-left, var(--uw-mango-blossom-left, 92%)) !important;
   }
 
   .flower-ticket.ticket-jasmine {
-    top: var(--uw-jasmine-top, 10%) !important;
-    left: var(--uw-jasmine-left, -75%) !important;
+    top: var(--large-display-jasmine-top, var(--uw-jasmine-top, 10%)) !important;
+    left: var(--large-display-jasmine-left, var(--uw-jasmine-left, -75%)) !important;
   }
 
   .flower-ticket.ticket-ashoka {
-    top: var(--uw-ashoka-top, 60.55%) !important;
-    left: var(--uw-ashoka-left, -48%) !important;
+    top: var(--large-display-ashoka-top, var(--uw-ashoka-top, 60.55%)) !important;
+    left: var(--large-display-ashoka-left, var(--uw-ashoka-left, -48%)) !important;
   }
-}
+}
+
