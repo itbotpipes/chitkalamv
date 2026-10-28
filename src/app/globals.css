@@ -729,13 +729,12 @@ body {
   transform: scale(1.2);
 }
 
-/* Individual word — starts hidden, blurred, and slightly below */
+/* Individual word — starts dimmed/muted, crisp without blur */
 .reveal-word {
   display: inline-block;
-  opacity: 0;
-  filter: blur(10px);
-  transform: translateY(6px);
-  will-change: opacity, filter, transform;
+  opacity: 0.2;
+  will-change: opacity;
+  transition: opacity 0.1s ease-out;
 }
 
 /* Red highlighted words — bold with SVG line underneath */
@@ -763,13 +762,13 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  filter: blur(10px);
-  transform: translateY(6px) scale(0.6);
+  opacity: 0.2;
   width: 1.1em;
   height: 1.1em;
   border-radius: 3px;
   vertical-align: middle;
+  will-change: opacity;
+  transition: opacity 0.1s ease-out;
 }
 
 .red-block {
@@ -968,7 +967,7 @@ body {
 }
 
 .contact-step .input-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.16rem;
 }
 
 .services-step {
@@ -986,7 +985,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   gap: 0.55rem 0.6rem;
-  margin-bottom: 1.45rem;
+  margin-bottom: 1.34rem;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -1055,7 +1054,7 @@ body {
 .line-input {
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid rgba(167, 23, 20, 0.35);
+  border-bottom: 2.5px solid #A71714;
   color: #A71714;
   font-family: inherit;
   font-size: 1.12rem;
@@ -1076,7 +1075,7 @@ body {
 .floating-input {
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid rgba(167, 23, 20, 0.3);
+  border-bottom: 2.5px solid #A71714;
   color: #A71714;
   font-family: inherit;
   font-size: 1.15rem;
@@ -1311,7 +1310,7 @@ body {
   height: 160px;
   min-height: 115px;
   background: transparent;
-  border: 1.5px solid #A71714;
+  border: 2px solid #A71714;
   border-radius: 7px;
   padding: 0.75rem 1rem;
   outline: none;
@@ -1658,7 +1657,7 @@ body {
   height: 1.85rem;
   font-size: 0.95rem;
   font-weight: 500;
-  border: 1.5px solid #A71714;
+  border: 2px solid #A71714;
   border-right: none;
   background: transparent;
   text-align: center;
@@ -1673,7 +1672,7 @@ body {
 }
 
 .mob-postcard-form-area.contact-step-active .phone-box:last-child {
-  border-right: 1.5px solid #A71714;
+  border-right: 2px solid #A71714;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -1698,7 +1697,7 @@ body {
 
 .mob-postcard-form-area.contact-step-active .email-input-group .line-input {
   border: none;
-  border-bottom: 1.5px solid #A71714;
+  border-bottom: 2.5px solid #A71714;
   background: transparent;
   text-align: center;
   font-size: 0.72rem;
@@ -1826,7 +1825,7 @@ body {
   width: auto;
   height: 2.2rem;
   font-size: 1rem;
-  border: 1.5px solid #A71714;
+  border: 2px solid #A71714;
   border-right: none;
   background: transparent;
   border-radius: 0;
@@ -1841,7 +1840,7 @@ body {
   width: 1.8rem;
   height: 2.4rem;
   font-size: 1.15rem;
-  border: 1.5px solid #A71714;
+  border: 2px solid #A71714;
   border-right: none;
   background: transparent;
   border-radius: 0;
@@ -1860,7 +1859,7 @@ body {
 
 .mob-postcard-section .phone-box:last-child,
 .postcard-section .phone-box:last-child {
-  border-right: 1.5px solid #A71714;
+  border-right: 2px solid #A71714;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -2063,7 +2062,7 @@ body {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid #A71714;
+  border-bottom: 2.5px solid #A71714;
   color: #A71714;
   font-family: inherit;
   font-weight: 400;
@@ -2226,7 +2225,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  height: 1px;
+  height: 2.5px;
   background-color: rgb(255, 255, 255);
 }
 
@@ -2243,9 +2242,10 @@ body {
 
 .footer-logo-img {
   filter: brightness(0) invert(1);
-  max-width: 250px;
-  width: 100%;
-  height: auto;
+  width: 325px;
+  height: 110px;
+  max-width: 90vw;
+  object-fit: contain;
 }
 
 .footer-logo-subtitle {
@@ -2492,9 +2492,10 @@ body {
   }
 
   .footer-logo-img {
-    max-width: 150px;
-    width: 45vw;
-    height: auto;
+    width: 195px;
+    height: 66px;
+    max-width: 75vw;
+    object-fit: contain;
   }
 
   .copyright-text {
@@ -2820,9 +2821,10 @@ body {
   }
 
   .footer-logo-img {
-    max-width: 200px;
-    width: 35vw;
-    height: auto;
+    width: 260px;
+    height: 88px;
+    max-width: 80vw;
+    object-fit: contain;
   }
 
   .copyright-text {
@@ -3143,9 +3145,9 @@ body {
   }
 
   .footer-logo-img {
-    max-width: 140px;
-    width: 30vh;
-    height: auto;
+    width: 182px;
+    height: 61px;
+    object-fit: contain;
   }
 
   .copyright-text {

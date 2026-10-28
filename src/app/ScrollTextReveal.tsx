@@ -76,41 +76,50 @@ export default function ScrollTextReveal() {
     let rafId: number;
 
     const tick = () => {
-      const section = sectionRef.current;
-      if (section) {
+      const wrapper = sectionRef.current;
+      if (wrapper) {
         const windowHeight = window.innerHeight;
-        const sectionRect = section.getBoundingClientRect();
-        
-        // Only run calculations if section is in or near the viewport
-        if (sectionRect.bottom > -100 && sectionRect.top < windowHeight + 100) {
-          const words = section.querySelectorAll<HTMLElement>('.reveal-word');
-          
-          // Each word starts revealing when it enters 88% from the top of the viewport
-          // and becomes fully revealed by 50% of the viewport (natural reading line)
-          const revealZoneStart = windowHeight * 0.88;
-          const revealZoneEnd = windowHeight * 0.50;
-          const revealDistance = revealZoneStart - revealZoneEnd;
+        const sections = wrapper.querySelectorAll<HTMLElement>('.scroll-text-section');
 
-          words.forEach((word) => {
-            const wordRect = word.getBoundingClientRect();
-            let progress = (revealZoneStart - wordRect.top) / revealDistance;
-            
-            if (progress < 0) progress = 0;
-            if (progress > 1) progress = 1;
+        sections.forEach((section) => {
+          const sectionRect = section.getBoundingClientRect();
 
-            word.style.opacity = progress.toFixed(3);
-            if (progress >= 1) {
+          // Only process if section is in or near the viewport
+          if (sectionRect.bottom > -200 && sectionRect.top < windowHeight + 200) {
+            const words = section.querySelectorAll<HTMLElement>('.reveal-word');
+            const totalWords = words.length;
+            if (totalWords === 0) return;
+
+            // Reading window: starts revealing as section enters viewport, completes as it scrolls through
+            const startY = windowHeight * 0.85;
+            const endY = windowHeight * 0.25;
+            const revealDistance = startY - endY;
+            const sectionProgress = Math.max(0, Math.min(1, (startY - sectionRect.top) / revealDistance));
+
+            // Smooth trailing wave across words in reading order
+            const overlap = Math.max(0.08, 2.5 / totalWords);
+            const scale = 1 - overlap;
+
+            words.forEach((word, index) => {
+              const wordStart = (index / totalWords) * scale;
+              const wordEnd = wordStart + overlap;
+
+              let wordProgress = (sectionProgress - wordStart) / (wordEnd - wordStart);
+              wordProgress = Math.max(0, Math.min(1, wordProgress));
+
+              const minOpacity = 0.20;
+              const finalOpacity = minOpacity + wordProgress * (1 - minOpacity);
+
+              word.style.opacity = finalOpacity.toFixed(3);
               word.style.filter = 'none';
               word.style.transform = 'none';
-            } else {
-              word.style.filter = `blur(${((1 - progress) * 10).toFixed(1)}px)`;
-              word.style.transform = `translateY(${((1 - progress) * 6).toFixed(1)}px)`;
-            }
-          });
-        }
+            });
+          }
+        });
 
         // Change scrollbar color when this section is prominently in view
-        if (sectionRect.top < windowHeight * 0.5 && sectionRect.bottom > windowHeight * 0.5) {
+        const wrapperRect = wrapper.getBoundingClientRect();
+        if (wrapperRect.top < windowHeight * 0.5 && wrapperRect.bottom > windowHeight * 0.5) {
           document.documentElement.style.setProperty('--scrollbar-thumb', '#E34234');
           document.documentElement.style.setProperty('--scrollbar-track', '#ffffff');
           document.documentElement.style.setProperty('--scrollbar-border', '#ffffff');
