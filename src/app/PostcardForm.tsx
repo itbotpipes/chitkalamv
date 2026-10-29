@@ -12,11 +12,49 @@ const POSTCARD_BACKGROUNDS = [
   '/postcard/add-postcard.webp',
 ];
 
+export const COUNTRY_CODES = [
+  { code: '+91', label: '+91 (IN)' },
+  { code: '+1', label: '+1 (US/CA)' },
+  { code: '+44', label: '+44 (UK)' },
+  { code: '+971', label: '+971 (UAE)' },
+  { code: '+61', label: '+61 (AU)' },
+  { code: '+65', label: '+65 (SG)' },
+  { code: '+49', label: '+49 (DE)' },
+  { code: '+33', label: '+33 (FR)' },
+  { code: '+81', label: '+81 (JP)' },
+  { code: '+966', label: '+966 (SA)' },
+  { code: '+974', label: '+974 (QA)' },
+  { code: '+965', label: '+965 (KW)' },
+  { code: '+968', label: '+968 (OM)' },
+  { code: '+973', label: '+973 (BH)' },
+  { code: '+880', label: '+880 (BD)' },
+  { code: '+977', label: '+977 (NP)' },
+  { code: '+94', label: '+94 (LK)' },
+  { code: '+60', label: '+60 (MY)' },
+  { code: '+62', label: '+62 (ID)' },
+  { code: '+852', label: '+852 (HK)' },
+  { code: '+86', label: '+86 (CN)' },
+  { code: '+82', label: '+82 (KR)' },
+  { code: '+39', label: '+39 (IT)' },
+  { code: '+34', label: '+34 (ES)' },
+  { code: '+41', label: '+41 (CH)' },
+  { code: '+31', label: '+31 (NL)' },
+  { code: '+46', label: '+46 (SE)' },
+  { code: '+47', label: '+47 (NO)' },
+  { code: '+45', label: '+45 (DK)' },
+  { code: '+353', label: '+353 (IE)' },
+  { code: '+64', label: '+64 (NZ)' },
+  { code: '+27', label: '+27 (ZA)' },
+  { code: '+55', label: '+55 (BR)' },
+  { code: '+52', label: '+52 (MX)' },
+];
+
 export default function PostcardForm() {
   const { showToast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isShaking, setIsShaking] = useState(false);
+  const [isCustomCountry, setIsCustomCountry] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     org: '',
@@ -58,6 +96,16 @@ export default function PostcardForm() {
   const handlePhoneInput = (index: number, value: string) => {
     const cleanValue = value.replace(/[^\d]/g, '');
     if (!cleanValue && value !== '') return;
+
+    // Support pasting multi-digit phone number
+    if (cleanValue.length > 1) {
+      const pastedDigits = cleanValue.slice(0, 10);
+      setFormData({ ...formData, phone: pastedDigits });
+      setErrorMessage('');
+      const nextIndex = Math.min(pastedDigits.length, 9);
+      phoneRefs.current[nextIndex]?.focus();
+      return;
+    }
 
     let currentPhone = (formData.phone || '').padEnd(10, ' ').split('');
     currentPhone[index] = cleanValue;
@@ -178,7 +226,7 @@ export default function PostcardForm() {
         {
           name: formData.name,
           org: formData.org,
-          contact: `Phone: ${formData.phone} | Email: ${formData.email}`,
+          contact: `Phone: ${formData.countryCode} ${formData.phone} | Email: ${formData.email}`,
           services: formData.services.join(', '),
           notes: formData.notes
         }, 
@@ -256,19 +304,56 @@ export default function PostcardForm() {
               <div className={`form-step fade-in-up contact-step ${isShaking ? 'shake' : ''}`}>
                 <label className="step-main-label">Where should our reply land?</label>
                 <div className="input-group floating-group phone-group">
-                  <div className="phone-boxes" style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
-                    {[...Array(10)].map((_, i) => (
+                  <div className="phone-input-row">
+                    <div className="country-code-wrapper">
+                      <select
+                        className="country-code-select"
+                        value={COUNTRY_CODES.some(c => c.code === formData.countryCode) ? formData.countryCode : 'other'}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === 'other') {
+                            setIsCustomCountry(true);
+                            setFormData({ ...formData, countryCode: '+' });
+                          } else {
+                            setIsCustomCountry(false);
+                            setFormData({ ...formData, countryCode: val });
+                          }
+                        }}
+                        aria-label="Country Code"
+                      >
+                        {COUNTRY_CODES.map((item) => (
+                          <option key={item.code} value={item.code}>
+                            {item.label}
+                          </option>
+                        ))}
+                        <option value="other">Other...</option>
+                      </select>
+                    </div>
+                    {isCustomCountry && (
                       <input
-                        type="tel"
-                        maxLength={1}
-                        key={i}
-                        className="phone-box"
-                        ref={(el) => { phoneRefs.current[i] = el; }}
-                        value={(formData.phone || '')[i] || ''}
-                        onChange={(e) => handlePhoneInput(i, e.target.value)}
-                        onKeyDown={(e) => handlePhoneKeyDown(i, e)}
+                        type="text"
+                        className="country-code-custom-input"
+                        placeholder="+..."
+                        value={formData.countryCode}
+                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                        maxLength={5}
+                        aria-label="Custom Country Code"
                       />
-                    ))}
+                    )}
+                    <div className="phone-boxes">
+                      {[...Array(10)].map((_, i) => (
+                        <input
+                          type="tel"
+                          maxLength={1}
+                          key={i}
+                          className="phone-box"
+                          ref={(el) => { phoneRefs.current[i] = el; }}
+                          value={(formData.phone || '')[i] || ''}
+                          onChange={(e) => handlePhoneInput(i, e.target.value)}
+                          onKeyDown={(e) => handlePhoneKeyDown(i, e)}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="input-group">

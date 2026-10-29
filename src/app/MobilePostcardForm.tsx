@@ -3,6 +3,7 @@
 import emailjs from '@emailjs/browser';
 import React, { useState, useEffect, useRef } from 'react';
 import { useToast } from './ToastNotification';
+import { COUNTRY_CODES } from './PostcardForm';
 
 const POSTCARD_BACKGROUNDS = [
   '/postcard/name-postcard.webp',
@@ -25,6 +26,7 @@ export default function MobilePostcardForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isShaking, setIsShaking] = useState(false);
+  const [isCustomCountry, setIsCustomCountry] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     org: '',
@@ -86,6 +88,15 @@ export default function MobilePostcardForm() {
   const handlePhoneInput = (index: number, value: string) => {
     const cleanValue = value.replace(/[^\d]/g, '');
     if (!cleanValue && value !== '') return;
+
+    if (cleanValue.length > 1) {
+      const pastedDigits = cleanValue.slice(0, 10);
+      setFormData({ ...formData, phone: pastedDigits });
+      setErrorMessage('');
+      const nextIndex = Math.min(pastedDigits.length, 9);
+      phoneRefs.current[nextIndex]?.focus();
+      return;
+    }
 
     let currentPhone = (formData.phone || '').padEnd(10, ' ').split('');
     currentPhone[index] = cleanValue;
@@ -196,7 +207,7 @@ export default function MobilePostcardForm() {
         {
           name: formData.name,
           org: formData.org,
-          contact: `Phone: ${formData.phone} | Email: ${formData.email}`,
+          contact: `Phone: ${formData.countryCode} ${formData.phone} | Email: ${formData.email}`,
           services: selectedServices.join(', '),
           notes: formData.notes
         }, 
@@ -277,6 +288,41 @@ export default function MobilePostcardForm() {
                 <label className="step-main-label">Where should our reply land?</label>
                 <div className="input-group" style={{ marginTop: '0.2rem' }}>
                   <div className="phone-input-row">
+                    <div className="country-code-wrapper">
+                      <select
+                        className="country-code-select"
+                        value={COUNTRY_CODES.some(c => c.code === formData.countryCode) ? formData.countryCode : 'other'}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === 'other') {
+                            setIsCustomCountry(true);
+                            setFormData({ ...formData, countryCode: '+' });
+                          } else {
+                            setIsCustomCountry(false);
+                            setFormData({ ...formData, countryCode: val });
+                          }
+                        }}
+                        aria-label="Country Code"
+                      >
+                        {COUNTRY_CODES.map((item) => (
+                          <option key={item.code} value={item.code}>
+                            {item.label}
+                          </option>
+                        ))}
+                        <option value="other">Other...</option>
+                      </select>
+                    </div>
+                    {isCustomCountry && (
+                      <input
+                        type="text"
+                        className="country-code-custom-input"
+                        placeholder="+..."
+                        value={formData.countryCode}
+                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                        maxLength={5}
+                        aria-label="Custom Country Code"
+                      />
+                    )}
                     <div className="phone-boxes">
                       {[...Array(10)].map((_, i) => (
                         <input

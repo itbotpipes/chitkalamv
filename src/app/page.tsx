@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import HeroFace from './HeroFace';
 import HeroFaceBL from './HeroFaceBL';
 import HeroFaceTR from './HeroFaceTR';
@@ -80,7 +81,14 @@ export default function Home() {
             className="footer-logo-img"
           />
         </div>
-        <p className="copyright-text">© 2026 Studio Chitkala All rights reserved</p>
+        <div className="footer-bottom">
+          <div className="footer-legal-links">
+            <Link href="/privacy-policy" className="footer-legal-link">Privacy Policy</Link>
+            <span className="footer-legal-divider">•</span>
+            <Link href="/terms-of-service" className="footer-legal-link">Terms of Service</Link>
+          </div>
+          <p className="copyright-text">© 2026 Studio Chitkala All rights reserved</p>
+        </div>
       </footer>
     </main>
   );
